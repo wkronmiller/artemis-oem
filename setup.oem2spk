@@ -11,7 +11,7 @@
  NAIF_BODY_NAME      += ( 'EM1' )
  NAIF_BODY_CODE      += ( 23 )
 
- APPEND_TO_OUTPUT = 'YES'
+ APPEND_TO_OUTPUT = 'NO'
  OUTPUT_SPK_FILE = 'data/orion.spk'
 
 \begintext
