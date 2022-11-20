@@ -1,0 +1,17 @@
+\begindata
+
+ LEAPSECONDS_FILE     = 'data/latest_leapseconds.tls'
+
+ INTERPOLATION_METHOD = 'HERMITE'
+
+ INTERPOLATION_DEGREE = 11
+
+ STRING_MAPPING       = ( 'EME2000',        'J2000' )
+
+ NAIF_BODY_NAME      += ( 'EM1' )
+ NAIF_BODY_CODE      += ( 23 )
+
+ APPEND_TO_OUTPUT = 'YES'
+ OUTPUT_SPK_FILE = 'data/orion.spk'
+
+\begintext
