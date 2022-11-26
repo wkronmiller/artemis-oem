@@ -8,5 +8,6 @@ mkdir -p data && \
 	wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0011.tls && \
 	wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls && \
 	wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/planets/earth_assoc_itrf93.tf && \
+  wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp && \
 	echo "Done"
 

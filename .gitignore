@@ -1,3 +1,5 @@
 bin/
 data/
 venv/
+
+__pycache__
