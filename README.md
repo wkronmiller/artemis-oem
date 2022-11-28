@@ -1,14 +1,22 @@
 # About
 
-Some scripts to track the current location of Artemis I's Orion spacecraft, using NASA OEM data.
+Some scripts to display the current location of Artemis I's Orion spacecraft, using NASA OEM
+[data](https://www.nasa.gov/feature/track-nasa-s-artemis-i-mission-in-real-time).
 
-Derived from [this](https://towardsdatascience.com/space-science-with-python-setup-and-first-steps-1-8551334118f6) tutorial on NASA SPICE and SpiceyPy.
+API implemented using SpiceyPy and Flask.  UI implemented in React, based on the 
+[React Three Fiber](https://github.com/pmndrs/react-three-fiber) 
+[demo](https://codesandbox.io/s/rrppl0y8l4?file=/src/App.js).
 
-# Setup
+![Screenshot](docs/images/ui-screenshot.png)
 
-1. Install a python virtual environment: `python3 -m virtualenv venv && source venv/bin/activate`
-2. Install requirements: `pip install -r requirements.txt`
-3. Get Artemis ephemeris data, and SPICE kernel data: `./get-data.sh`
-4. Install the OEM2SPK converter tool: `./get-tools.sh`
-5. Convert from OEM to SPICE format: `./prepare-spk.sh`
-6. Run the program: `python3 ./main.py`
+# Using
+
+NOTE: the API and UI are built in development mode. 
+Exposing the container ports to unprotected environments 
+(e.g. the internet, coffee shop wifi, etc...) is strongly discouraged.
+
+1. Run `docker-compose build` to build the API and UI containers
+2. Run `docker-compose up` to launch the containers
+
+When launched, the docker-compose project will create an API container running Flask in 
+dev mode (port 5000), and a UI container running the React UI in dev mode (port 3000).
