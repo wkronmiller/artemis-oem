@@ -5,8 +5,6 @@ services:
     build: ./api
     volumes:
       - "./api/src:/usr/src/app/src"
-    ports:
-      - "5000:5000"
   ui:
     build: ./ui
     volumes:
