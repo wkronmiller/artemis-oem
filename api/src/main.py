@@ -41,12 +41,14 @@ def get_current_positions():
     artemis = list(get_geo(EARTH_MOON_BARYCENTER, ARTEMIS, now).point)
     moon = list(get_geo(EARTH_MOON_BARYCENTER, MOON, now).point)
     earth = list(get_geo(EARTH_MOON_BARYCENTER, EARTH, now).point)
+    sun = list(get_geo(EARTH_MOON_BARYCENTER, SUN, now).point)
 
     return json.dumps({
         'timestamp': now,
         'artemis': artemis,
         'moon': moon,
         'earth': earth,
+        'sun': sun,
     }, indent=4, sort_keys=True, default=str)
 
 if __name__ == '__main__':
