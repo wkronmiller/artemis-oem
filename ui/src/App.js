@@ -78,10 +78,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const [orbits, setOrbits] = useState({
-    artemis: [],
-    moon: [],
-  });
+  const [orbits, setOrbits] = useState(null);
   useEffect(() => {
     (async () => {
       const url = `/api/v1/orbits`;
@@ -104,13 +101,7 @@ export default function App() {
     setScale(maxScale / 10);
   }, [orbits]);
 
-  const [targets, setTargets] = useState({
-    artemis: [0, 0, 0],
-    earth: [0, 0, 0],
-    moon: [0, 0, 0],
-    sun: [0, 0, 10],
-    timestamp: null,
-  });
+  const [targets, setTargets] = useState(null);
   useEffect(() => {
     (async () => {
       const url = '/api/v1/positions';
@@ -119,6 +110,13 @@ export default function App() {
       setTargets(data);
     })();
   }, [updateInterval]);
+  if(!orbits || !targets) {
+    return (
+      <div className='loader'>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -143,7 +141,13 @@ export default function App() {
           />
           <color attach="background" args={['#151518']} />
           <Stars />
-          <OrbitControls autoRotate makeDefault target={rescalePoint(scale, targets.artemis)} />
+          <OrbitControls 
+            enablePan={false} 
+            enableRotate={false} 
+            autoRotate 
+            makeDefault 
+            target={rescalePoint(scale, targets.artemis)} 
+          />
         </Canvas>
       </div>
       <LiveData updateInterval={updateInterval} />
@@ -157,11 +161,10 @@ function LiveData({ updateInterval }) {
 
   useEffect(() => {
     async function getMissionData() {
-      const url = 'https://orion.rory.coffee/api/mission/Orion_flight104_mission.txt';
+      const url = 'https://orion-tracker.rory.technology/api/mission/Orion_flight104_mission.txt';
 
       const response = await fetch(url);
       const data = await response.json();
-      console.log('Fetched new mission data', data);
       setMission(data);
     }
 
@@ -170,11 +173,10 @@ function LiveData({ updateInterval }) {
   }, [updateInterval]);
 
   function getMissionVariable(key) {
-    if(!mission) {
+    if(!mission || !mission[key]) {
       return null;
     }
     const { Value, Status, Time } = mission[key];
-    console.log('Got value', Value, 'for key', key);
     return Value;
   }
 
@@ -185,14 +187,13 @@ function LiveData({ updateInterval }) {
   const [batteryState, setBatteryState] = useState(null);
 
   useEffect(() => {
+    if(!mission) { return; }
     console.log('Parsing mission data');
 
-    if(mission) {
-      const { Date: date } = mission['File'];
-      const cst = new Date(date)
-      cst.setTime(cst.getTime() + 60 * 60000);
-      setUpdateTs(cst.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    }
+    const { Date: date } = mission['File'];
+    const cst = new Date(date)
+    cst.setTime(cst.getTime() + 60 * 60000);
+    setUpdateTs(cst.toLocaleString('en-US', { timeZone: 'America/New_York' }));
 
     setVelocity(Number(getMissionVariable('Parameter_1')).toLocaleString("en-US"));
     setDistanceToMoon(Number(getMissionVariable('Parameter_2')).toLocaleString("en-US"));
